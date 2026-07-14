@@ -1,0 +1,34 @@
+services:
+  registry:
+    image: registry:2
+    container_name: private-registry-container
+    restart: always
+    ports:
+      - "127.0.0.1:5000:5000"
+    environment:
+      REGISTRY_AUTH: htpasswd
+      REGISTRY_AUTH_HTPASSWD_REALM: Registry Realm
+      REGISTRY_AUTH_HTPASSWD_PATH: /auth/htpasswd
+      REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY: /var/lib/registry
+      REGISTRY_STORAGE_DELETE_ENABLED: "true"
+      TZ: ${TZ}
+    volumes:
+      - ./auth:/auth
+      - ./data:/var/lib/registry
+    healthcheck:
+      test: ["CMD", "netstat", "-an", "|", "grep", "5000"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "5"
+    networks:
+      - infra-networks
+
+networks:
+  infra-networks:
+    name: infra-networks
+    external: true

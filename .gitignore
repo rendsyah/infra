@@ -1,0 +1,27 @@
+# Environment Variables
+.env
+
+# Database Data
+databases/mariadb/
+databases/postgres/
+databases/mongodb/
+databases/redis/
+
+# Messaging Data
+messaging/data/
+messaging/logs/
+
+# Registry Data
+registry/data/
+registry/auth/
+
+# Observability Data
+observability/loki/data/
+observability/loki/chunks/
+observability/loki/rules/
+observability/loki/compactor/
+observability/grafana/data/
+observability/fluent-bit/db/
+
+# Backups Data
+backups/
